@@ -43,7 +43,6 @@ def part2(data: list[str]) -> int:
             my_string = str(n)
             if has_repeating_pattern(my_string):
                 count += n
-                break
     return count
 
 

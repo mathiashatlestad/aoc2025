@@ -2,6 +2,7 @@
 
 import argparse
 import inspect
+import time
 from pathlib import Path
 from typing import Callable, Any
 
@@ -33,7 +34,7 @@ def read_input(use_example: bool = False) -> str:
 def run_solution(
     part1_func: Callable[[Any], int],
     part2_func: Callable[[Any], int],
-    transform_input: Callable[[str], Any] | None = None
+    transform_input: Callable[[str], Any]
 ) -> None:
     """Run an Advent of Code solution with standard argument parsing.
     
@@ -49,10 +50,14 @@ def run_solution(
     args = parser.parse_args()
     
     raw_input = read_input(args.example)
-    data = transform_input(raw_input) if transform_input else raw_input
+    data = transform_input(raw_input)
     
+    start = time.perf_counter()
     result1 = part1_func(data)
-    print(f"Part 1: {result1}")
+    elapsed1 = time.perf_counter() - start
+    print(f"Part 1: {result1} - ({elapsed1*1000:.0f} ms)")
     
+    start = time.perf_counter()
     result2 = part2_func(data)
-    print(f"Part 2: {result2}")
+    elapsed2 = time.perf_counter() - start
+    print(f"Part 2: {result2} - ({elapsed2*1000:.0f} ms)")
