@@ -1,7 +1,9 @@
 """Helper functions for Advent of Code puzzles."""
 
+import argparse
 import inspect
 from pathlib import Path
+from typing import Callable, Any
 
 
 def read_input(use_example: bool = False) -> str:
@@ -16,9 +18,11 @@ def read_input(use_example: bool = False) -> str:
     Returns:
         The contents of the input file as a string
     """
-    # Get the caller's file path
-    caller_frame = inspect.stack()[1]
-    caller_path = Path(caller_frame.filename)
+    # Get the caller's file path - walk up the stack to find the first non-utils file
+    for frame_info in inspect.stack()[1:]:
+        caller_path = Path(frame_info.filename)
+        if 'utils' not in caller_path.parts:
+            break
     
     # Find input.txt or example.txt in the same directory as the caller
     filename = "example.txt" if use_example else "input.txt"
@@ -26,50 +30,29 @@ def read_input(use_example: bool = False) -> str:
     return input_path.read_text().strip()
 
 
-def read_input_legacy(day: int) -> str:
-    """Read the input file for a given day (legacy function).
+def run_solution(
+    part1_func: Callable[[Any], int],
+    part2_func: Callable[[Any], int],
+    transform_input: Callable[[str], Any] | None = None
+) -> None:
+    """Run an Advent of Code solution with standard argument parsing.
+    
+    Handles argument parsing, input reading, and running both parts.
     
     Args:
-        day: The day number (1-25)
-        
-    Returns:
-        The contents of the input file as a string
+        part1_func: Function to solve part 1
+        part2_func: Function to solve part 2
+        transform_input: Optional function to transform the raw input string
     """
-    input_path = Path(__file__).parent.parent / "inputs" / f"day{day:02d}.txt"
-    return input_path.read_text().strip()
-
-
-def read_input_lines(day: int) -> list[str]:
-    """Read the input file for a given day as a list of lines.
+    parser = argparse.ArgumentParser(description='Advent of Code solution')
+    parser.add_argument('-e', '--example', action='store_true', help='Use example.txt instead of input.txt')
+    args = parser.parse_args()
     
-    Args:
-        day: The day number (1-25)
-        
-    Returns:
-        A list of lines from the input file
-    """
-    return read_input(day).split('\n')
-
-
-def read_input_numbers(day: int) -> list[int]:
-    """Read the input file for a given day as a list of integers.
+    raw_input = read_input(args.example)
+    data = transform_input(raw_input) if transform_input else raw_input
     
-    Args:
-        day: The day number (1-25)
-        
-    Returns:
-        A list of integers from the input file
-    """
-    return [int(line) for line in read_input_lines(day)]
-
-
-def read_input_grid(day: int) -> list[list[str]]:
-    """Read the input file for a given day as a 2D grid.
+    result1 = part1_func(data)
+    print(f"Part 1: {result1}")
     
-    Args:
-        day: The day number (1-25)
-        
-    Returns:
-        A 2D list representing the grid
-    """
-    return [list(line) for line in read_input_lines(day)]
+    result2 = part2_func(data)
+    print(f"Part 2: {result2}")
