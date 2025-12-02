@@ -209,3 +209,5 @@ __marimo__/
 # Advent of Code
 day*/input.txt
 session.txt
+
+.DS_Store
