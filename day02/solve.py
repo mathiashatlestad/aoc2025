@@ -14,11 +14,10 @@ def part1(data: str) -> int:
         first, last = int(split[0]), int(split[1])
         for n in range(first, last+1):
             my_string = str(n)
-            midpoint = len(my_string) // 2
-            half1 = my_string[:midpoint]
-            half2 = my_string[midpoint:]
-            if half1 == half2:
-                count+=n       
+            str_len = len(my_string)
+            midpoint = str_len // 2
+            if my_string[:midpoint] == my_string[midpoint:]:
+                count += n       
     return count
 
 
@@ -29,25 +28,14 @@ def part2(data: str) -> int:
         first, last = int(split[0]), int(split[1])
         for n in range(first, last+1):
             my_string = str(n)
-            is_invalid = False
-            for length in range(1, len(my_string) // 2 + 1):
-                if len(my_string) % length == 0:  # Length must divide evenly
+            str_len = len(my_string)
+            for length in range(1, str_len // 2 + 1):
+                if str_len % length == 0:
                     pattern = my_string[:length]
-                    repetitions = len(my_string) // length
-                    if repetitions >= 2 and pattern * repetitions == my_string:
-                        is_invalid = True
+                    if my_string == pattern * (str_len // length):
+                        count += n
                         break
-            if is_invalid:
-                count += n
     return count
-
-
-
-
-
-
-
-
 
 
 parser = argparse.ArgumentParser(description='Advent of Code solution')

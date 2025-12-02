@@ -40,7 +40,6 @@ def part2(data: str) -> int:
                 zeros+=1
     return zeros
 
-
 parser = argparse.ArgumentParser(description='Advent of Code solution')
 parser.add_argument('-e', '--example', action='store_true', help='Use example.txt instead of input.txt')
 args = parser.parse_args()
