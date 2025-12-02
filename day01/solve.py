@@ -2,12 +2,14 @@
 Advent of Code 2025 - Day 1
 """
 
-from utils.helpers import read_input
+import sys; from pathlib import Path; sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from utils.aoc import read_input
 
 
 def part1(data: str) -> int:
     """Solve part 1 of the puzzle."""
     lines = data.split('\n')
+    print(lines)
     return 0
 
 
