@@ -9,19 +9,37 @@ from utils.aoc import read_input
 
 def part1(data: str) -> int:
     """Solve part 1 of the puzzle."""
+    startNum = 50
+    zeros = 0
+    for item in data:
+        direction, number = item[0], int(item[1:])
+        if direction == "L":
+            startNum-=number
+        elif direction == "R":
+            startNum+=number
+
+        if startNum % 100 == 0:
+            zeros+=1
     
-
-
-
-
-    
-    return 0
+    return zeros
 
 
 def part2(data: str) -> int:
-    """Solve part 2 of the puzzle."""
-    # TODO: Implement solution
-    return 0
+    """Solve part 1 of the puzzle."""
+    startNum = 50
+    zeros = 0
+    for item in data:
+        direction, number = item[0], int(item[1:])
+        for n in range(0, number):
+            if direction == "L":
+                startNum-=1
+            elif direction == "R":
+                startNum+=1
+
+            if startNum % 100 == 0:
+                zeros+=1
+    return zeros
+
 
 parser = argparse.ArgumentParser(description='Advent of Code solution')
 parser.add_argument('-e', '--example', action='store_true', help='Use example.txt instead of input.txt')
