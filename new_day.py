@@ -54,9 +54,14 @@ def create_day(day_number: int) -> None:
     input_file = day_folder / "input.txt"
     input_file.write_text("# Add your puzzle input here\n")
     
+    # Create empty example.txt
+    example_file = day_folder / "example.txt"
+    example_file.write_text("# Add your example input here\n")
+    
     print(f"✅ Created {day_folder.name}/")
     print(f"   - solve.py")
     print(f"   - input.txt")
+    print(f"   - example.txt")
     print(f"\nNext steps:")
     print(f"1. Add your puzzle input to {day_folder.name}/input.txt")
     print(f"2. Implement the solution in {day_folder.name}/solve.py")
