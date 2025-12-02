@@ -1,10 +1,29 @@
 """Helper functions for Advent of Code puzzles."""
 
+import inspect
 from pathlib import Path
 
 
-def read_input(day: int) -> str:
-    """Read the input file for a given day.
+def read_input() -> str:
+    """Read the input file for the calling day's folder.
+    
+    Automatically detects which day folder is calling this function
+    and reads from that day's input.txt file.
+    
+    Returns:
+        The contents of the input file as a string
+    """
+    # Get the caller's file path
+    caller_frame = inspect.stack()[1]
+    caller_path = Path(caller_frame.filename)
+    
+    # Find input.txt in the same directory as the caller
+    input_path = caller_path.parent / "input.txt"
+    return input_path.read_text().strip()
+
+
+def read_input_legacy(day: int) -> str:
+    """Read the input file for a given day (legacy function).
     
     Args:
         day: The day number (1-25)

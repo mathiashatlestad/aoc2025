@@ -2,13 +2,7 @@
 Advent of Code 2025 - Day X
 """
 
-from pathlib import Path
-
-
-def read_input() -> str:
-    """Read the input file for this day."""
-    input_path = Path(__file__).parent / "input.txt"
-    return input_path.read_text().strip()
+from utils.helpers import read_input
 
 
 def part1(data: str) -> int:
@@ -24,16 +18,10 @@ def part2(data: str) -> int:
     # TODO: Implement solution
     return 0
 
+data = read_input()
 
-def main():
-    data = read_input()
-    
-    result1 = part1(data)
-    print(f"Part 1: {result1}")
-    
-    result2 = part2(data)
-    print(f"Part 2: {result2}")
+result1 = part1(data)
+print(f"Part 1: {result1}")
 
-
-if __name__ == "__main__":
-    main()
+result2 = part2(data)
+print(f"Part 2: {result2}")
