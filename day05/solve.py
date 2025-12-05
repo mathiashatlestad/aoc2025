@@ -37,9 +37,20 @@ def part1(data: tuple[list[int], list[tuple[int][int]]]) -> int:
 
 
 def part2(data: tuple[list[int], list[tuple[int][int]]]) -> int:
-    """Solve part 2 of the puzzle."""
-    # TODO: Implement solution
-    return 0
+    sorted_ranges = sorted(data[1], key=lambda x: x[0])
+    
+    merged_ranges = []
+    for current in sorted_ranges:
+        if not merged_ranges or current[0] > merged_ranges[-1][1] + 1:
+            merged_ranges.append(current)
+        else:
+            last = merged_ranges[-1]
+            merged_ranges[-1] = (last[0], max(last[1], current[1]))
+    
+    count = 0
+    for rng in merged_ranges:
+        count += rng[1] - rng[0] + 1
+    return count
 
 
 if __name__ == '__main__':
