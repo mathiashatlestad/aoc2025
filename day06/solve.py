@@ -24,9 +24,37 @@ def part1(data: list[str]) -> int:
 
 
 def part2(data: list[str]) -> int:
-    """Solve part 2 of the puzzle."""
-    # TODO: Implement solution
-    return 0
+    total = 0
+    partly = 0
+    isSum = True
+    maxlen = 0
+    for d in data:
+        maxlen = max(maxlen, len(d))
+    data = [d.ljust(maxlen) for d in data]
+
+    for index in range(maxlen):
+        if data[-1][index] == "*":
+            total += partly
+            partly = 1
+            isSum = False
+        elif data[-1][index] == "+":
+            total += partly    
+            partly = 0
+            isSum = True
+
+        my_string = ""
+        for j in range(0, len(data)-1):
+            my_string += data[j][index] 
+        
+        if my_string.strip() == "":
+            continue    
+
+        if isSum:
+            partly+=int(my_string)
+        else: 
+            partly*=int(my_string)     
+          
+    return total + partly
 
 
 if __name__ == '__main__':
